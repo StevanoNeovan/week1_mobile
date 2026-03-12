@@ -1,9 +1,69 @@
 import 'dart:io';
 
+// void main() {
+//   Map<String, String> mahasiswa = {
+//     'nim': '123456',
+//     'nama': 'Stevano',
+//     'jurusan': 'Informatika',
+//     'ipk': '3.5'
+//   };
+
+//   print('Data Mahasiswa: $mahasiswa');
+
+//   // tambah data baru ke map
+//   mahasiswa['fakultas'] = 'Vokasi';
+//   print('Setelah menambahkan fakultas: $mahasiswa');
+
+//   // cek data berdasarkan key
+//   stdout.write('Masukkan key yang ingin dicek: ');
+//   String key = stdin.readLineSync()!;
+
+//   if (mahasiswa.containsKey(key)) {
+//     print('Value dari "$key" adalah: ${mahasiswa[key]}');
+//   } else {
+//     print('Key tidak ditemukan');
+//   }
+
+//   // ubah data
+//   stdout.write('Masukkan key yang ingin diubah: ');
+//   String ubahKey = stdin.readLineSync()!;
+
+//   if (mahasiswa.containsKey(ubahKey)) {
+//     stdout.write('Masukkan value baru: ');
+//     String valueBaru = stdin.readLineSync()!;
+//     mahasiswa[ubahKey] = valueBaru;
+//     print('Data berhasil diubah');
+//   } else {
+//     print('Key tidak ditemukan');
+//   }
+
+//   // hapus data
+//   stdout.write('Masukkan key yang ingin dihapus: ');
+//   String hapusKey = stdin.readLineSync()!;
+
+//   mahasiswa.remove(hapusKey);
+//   print('Data berhasil dihapus');
+
+//   // jumlah data
+//   print('Jumlah data dalam map: ${mahasiswa.length}');
+
+//   // tampilkan semua key
+//   print('Semua Key:');
+//   mahasiswa.keys.forEach((k) {
+//     print(k);
+//   });
+
+//   // tampilkan semua value
+//   print('Semua Value:');
+//   mahasiswa.values.forEach((v) {
+//     print(v);
+//   });
+// }
+
 void main() {
-  // ===============================
+  
   // INPUT SINGLE DATA MAHASISWA
-  // ===============================
+  
   print("=== INPUT DATA MAHASISWA ===");
 
   stdout.write("Masukkan NIM: ");
@@ -27,10 +87,9 @@ void main() {
 
   print("\nData Mahasiswa: $mahasiswa");
 
-  // ===============================
+  
   // OPERASI MAP
-  // ===============================
-
+  
   // cek data berdasarkan key
   stdout.write("\nMasukkan key yang ingin dicek: ");
   String key = stdin.readLineSync()!;
@@ -76,9 +135,9 @@ void main() {
     print(v);
   });
 
-  // ===============================
+  
   // INPUT MULTIPLE MAHASISWA
-  // ===============================
+  
 
   print("\n=== INPUT MULTIPLE MAHASISWA ===");
 

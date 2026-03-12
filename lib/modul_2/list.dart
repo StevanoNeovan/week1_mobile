@@ -63,7 +63,7 @@ print(dataList);
 print('Data pada index 1: ${dataList[1]}');
 
 // ubah berdasar index tertentu
-dataList[0] = 'Data baru';
+dataList[0] = 'Vano';
 print('Data List setelah diubah: $dataList');
 
 // hapus berdasar index tertentu

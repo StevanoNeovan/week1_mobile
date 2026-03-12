@@ -15,7 +15,7 @@ import 'dart:io';
 // print('Apakah Harimau ada di set? ${hewan.contains('Harimau')}');
 // print('Jumlah data dalam set: ${hewan.length}');
 
-// mengambil jumlah data dari pengguna
+//mengambil jumlah data dari pengguna
 void main() {
   Set<String> dataSet = {};
 int count = 0;
