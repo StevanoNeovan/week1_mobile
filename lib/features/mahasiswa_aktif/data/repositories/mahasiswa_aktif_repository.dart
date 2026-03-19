@@ -1,13 +1,60 @@
+import 'dart:convert';
 import 'package:week1_mobile/features/mahasiswa_aktif/data/models/mahasiswa_aktif_model.dart';
+import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
+// =============================================
+// VERSI HTTP
+// =============================================
 class MahasiswaAktifRepository {
+  /// Mendapatkan daftar mahasiswa aktif dari API /posts menggunakan HTTP
   Future<List<MahasiswaAktifModel>> getMahasiswaAktifList() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return [
-      MahasiswaAktifModel(nama: 'Andi Firmansyah', nim: '2024001', email: 'andi.f@student.example.com', jurusan: 'Teknik Informatika', semester: 6, ipk: 3.75),
-      MahasiswaAktifModel(nama: 'Bela Safitri', nim: '2024002', email: 'bela.s@student.example.com', jurusan: 'Teknik Informatika', semester: 4, ipk: 3.60),
-      MahasiswaAktifModel(nama: 'Cahyo Nugroho', nim: '2024003', email: 'cahyo.n@student.example.com', jurusan: 'Sistem Informasi', semester: 2, ipk: 3.45),
-      MahasiswaAktifModel(nama: 'Dewi Puspita', nim: '2024004', email: 'dewi.p@student.example.com', jurusan: 'Teknik Informatika', semester: 4, ipk: 3.80),
-    ];
+    final response = await http.get(
+      Uri.parse('https://jsonplaceholder.typicode.com/posts'),
+      headers: {'Accept': 'application/json'},
+    );
+
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      print(data); // Debug: Tampilkan data yang sudah di-decode
+      return data.map((json) => MahasiswaAktifModel.fromJson(json)).toList();
+    } else {
+      print('Error: ${response.statusCode} - ${response.body}');
+      throw Exception(
+        'Gagal memuat data mahasiswa aktif: ${response.statusCode}',
+      );
+    }
+  }
+}
+
+// =============================================
+// VERSI DIO
+// =============================================
+class MahasiswaAktifRepositoryDio {
+  final Dio _dio = Dio(
+    BaseOptions(
+      baseUrl: 'https://jsonplaceholder.typicode.com',
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 10),
+      headers: {'Accept': 'application/json'},
+    ),
+  );
+
+  /// Mendapatkan daftar mahasiswa aktif menggunakan Dio
+  Future<List<MahasiswaAktifModel>> getMahasiswaAktifList() async {
+    try {
+      final response = await _dio.get('/posts');
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data;
+        return data.map((json) => MahasiswaAktifModel.fromJson(json)).toList();
+      } else {
+        throw Exception(
+          'Gagal memuat data mahasiswa aktif: ${response.statusCode}',
+        );
+      }
+    } on DioException catch (e) {
+      throw Exception('Network error: ${e.message}');
+    }
   }
 }

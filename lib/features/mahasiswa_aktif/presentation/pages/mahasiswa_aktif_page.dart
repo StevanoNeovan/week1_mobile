@@ -27,16 +27,20 @@ class MahasiswaAktifPage extends ConsumerWidget {
         loading: () => const LoadingWidget(),
         error: (error, stack) => CustomErrorWidget(
           message: 'Gagal memuat data: ${error.toString()}',
-          onRetry: () => ref.read(mahasiswaAktifNotifierProvider.notifier).refresh(),
+          onRetry: () =>
+              ref.read(mahasiswaAktifNotifierProvider.notifier).refresh(),
         ),
         data: (list) => RefreshIndicator(
-          onRefresh: () async => ref.invalidate(mahasiswaAktifNotifierProvider),
+          onRefresh: () async =>
+              ref.invalidate(mahasiswaAktifNotifierProvider),
           child: ListView.builder(
             padding: const EdgeInsets.all(AppConstants.paddingMedium),
             itemCount: list.length,
             itemBuilder: (context, index) => MahasiswaAktifCard(
               mahasiswa: list[index],
-              gradientColors: AppConstants.dashboardGradients[index % AppConstants.dashboardGradients.length],
+              gradientColors:
+                  AppConstants.dashboardGradients[
+                    index % AppConstants.dashboardGradients.length],
             ),
           ),
         ),

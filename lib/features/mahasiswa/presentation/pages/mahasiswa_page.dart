@@ -27,7 +27,8 @@ class MahasiswaPage extends ConsumerWidget {
         loading: () => const LoadingWidget(),
         error: (error, stack) => CustomErrorWidget(
           message: 'Gagal memuat data mahasiswa: ${error.toString()}',
-          onRetry: () => ref.read(mahasiswaNotifierProvider.notifier).refresh(),
+          onRetry: () =>
+              ref.read(mahasiswaNotifierProvider.notifier).refresh(),
         ),
         data: (mahasiswaList) => MahasiswaListView(
           mahasiswaList: mahasiswaList,
