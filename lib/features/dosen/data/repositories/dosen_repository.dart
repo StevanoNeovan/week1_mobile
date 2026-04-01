@@ -1,56 +1,23 @@
-import 'dart:convert';
+import 'package:week1_mobile/core/network/dio_client.dart';
 import 'package:week1_mobile/features/dosen/data/models/dosen_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 
-// =============================================
-// VERSI HTTP
-// =============================================
 class DosenRepository {
-  /// Mendapatkan daftar dosen menggunakan HTTP
-  Future<List<DosenModel>> getDosenList() async {
-    final response = await http.get(
-      Uri.parse('https://jsonplaceholder.typicode.com/users'),
-      headers: {'Accept': 'application/json'},
-    );
+  final DioClient _dioClient;
 
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      print(data); // Debug: Tampilkan data yang sudah di-decode
-      return data.map((json) => DosenModel.fromJson(json)).toList();
-    } else {
-      print('Error: ${response.statusCode} - ${response.body}');
-      throw Exception('Gagal memuat data dosen: ${response.statusCode}');
-    }
-  }
-}
+  DosenRepository({DioClient? dioClient})
+    : _dioClient = dioClient ?? DioClient();
 
-// =============================================
-// VERSI DIO
-// =============================================
-class DosenRepositoryDio {
-  final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: 'https://jsonplaceholder.typicode.com',
-      connectTimeout: const Duration(seconds: 10),
-      receiveTimeout: const Duration(seconds: 10),
-      headers: {'Accept': 'application/json'},
-    ),
-  );
-
-  /// Mendapatkan daftar dosen menggunakan Dio
+  /// get data daftar dosen
   Future<List<DosenModel>> getDosenList() async {
     try {
-      final response = await _dio.get('/users');
-
-      if (response.statusCode == 200) {
-        final List<dynamic> data = response.data;
-        return data.map((json) => DosenModel.fromJson(json)).toList();
-      } else {
-        throw Exception('Gagal memuat data dosen: ${response.statusCode}');
-      }
+      final Response response = await _dioClient.dio.get('/users');
+      final List<dynamic> data = response.data;
+      return data.map((json) => DosenModel.fromJson(json)).toList();
     } on DioException catch (e) {
-      throw Exception('Network error: ${e.message}');
+      throw Exception(
+        'Gagal memuat data dosen: ${e.response?.statusCode} - ${e.message}',
+      );
     }
   }
 }
